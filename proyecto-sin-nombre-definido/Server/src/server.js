@@ -7,7 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 require("./helpers/Middlewares/passport-config");
 const router = require("./routes/index");
-require("./helpers/Middlewares/github")
+require("./helpers/Middlewares/github");
 const { User } = require("./db");
 const { tokenSign } = require("./helpers/Token/loginToken");
 
@@ -54,7 +54,7 @@ passport.deserializeUser((id, cb) => {
 //       clientID: process.env.GITHUB_CLIENT_ID,
 //       clientSecret: process.env.GITHUB_CLIENT_SECRET,
 //       callbackURL: "https://daily-oven-production.up.railway.app/auth/github/callback",
-//       scope: ["user:email"], 
+//       scope: ["user:email"],
 //     },
 //     async function (accessToken, refreshToken, profile, cb) {
 //       const user = await User.findOne({ where: { githubId: profile.id } });
@@ -81,7 +81,7 @@ passport.deserializeUser((id, cb) => {
 //     const user = req.user;
 //     const accessToken = await tokenSign(user);
 //     res.json(accessToken)
-  
+
 //   }
 // );
 

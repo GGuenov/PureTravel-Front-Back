@@ -25,7 +25,7 @@ import {
   FAV_USER_PROPERTY,
   GET_REVIEWS,
   GET_ALL_FAV_USER_PROPERTY,
-  DELETE_FAV_USER_PROPERTY
+  DELETE_FAV_USER_PROPERTY,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -54,10 +54,10 @@ export const getAllContact = () => {
     }
   };
 };
-export const getAllReallyProperties = ({ order}, page) => {
+export const getAllReallyProperties = ({ order }, page) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios( `/assets?size=10&page=${page}&${order}=yes`);
+      const { data } = await axios(`/assets?size=10&page=${page}&${order}=yes`);
       return dispatch({
         type: GET_ALL_ALL_PROPERTIES,
         payload: data,
@@ -68,9 +68,9 @@ export const getAllReallyProperties = ({ order}, page) => {
   };
 };
 
-export const getAllUsers = ({search, order}) => {
-  if(!search) search = ""
-  if(order == "") order = "userNameAsc"
+export const getAllUsers = ({ search, order }) => {
+  if (!search) search = "";
+  if (order == "") order = "userNameAsc";
 
   return async (dispatch) => {
     try {
@@ -208,8 +208,8 @@ export const putProperty = (id, form) => {
 export const putUser = (form) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/users`,form );
-      console.log(data)
+      const { data } = await axios.put(`/users`, form);
+      console.log(data);
       return dispatch({
         type: PUT_USER,
         payload: data,
@@ -218,51 +218,57 @@ export const putUser = (form) => {
       console.error(error);
     }
   };
-}
+};
 
 export const favUserProperty = (idUser, idAsset) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put('/favorites/like', { userId: idUser, assetId: idAsset });
-      console.log('favinfo', data);
+      const { data } = await axios.put("/favorites/like", {
+        userId: idUser,
+        assetId: idAsset,
+      });
+      console.log("favinfo", data);
       return dispatch({
         type: FAV_USER_PROPERTY,
-        payload: data
+        payload: data,
       });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const deleteFavUserProperty = (idUser, idAsset) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put('/favorites/unlike', { userId: idUser, assetId: idAsset });
+      const { data } = await axios.put("/favorites/unlike", {
+        userId: idUser,
+        assetId: idAsset,
+      });
       return dispatch({
         type: DELETE_FAV_USER_PROPERTY,
-        payload: data
+        payload: data,
       });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const getAllFavUserProps = (id) => {
-  return async (dispatch)=> {
+  return async (dispatch) => {
     try {
-      const data = await axios(`/favorites?userId=${id}`)
-      console.log(data)
+      const data = await axios(`/favorites?userId=${id}`);
+      console.log(data);
       return dispatch({
-        type:GET_ALL_FAV_USER_PROPERTY,
-        payload: data
-      })
+        type: GET_ALL_FAV_USER_PROPERTY,
+        payload: data,
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const searchByFilter = (
   {
@@ -276,8 +282,9 @@ export const searchByFilter = (
     sellPriceMin,
     order,
     amenities,
-    page
-  },pagina
+    page,
+  },
+  pagina
 ) => {
   return async (dispatch) => {
     try {
@@ -289,11 +296,12 @@ export const searchByFilter = (
       if (sellPriceMax == 1000) sellPriceMax = "";
       if (sellPriceMin == 0) sellPriceMin = "";
       // if (amenities.length == 0) amenities = ""
-      const mapAmen = Array.isArray(amenities) && amenities.length > 0
-        ? `&amenities=${amenities.join("&amenities=")}`
-        : '';
-        
-      console.log("KJDASJKDSAJK",amenities)
+      const mapAmen =
+        Array.isArray(amenities) && amenities.length > 0
+          ? `&amenities=${amenities.join("&amenities=")}`
+          : "";
+
+      console.log("KJDASJKDSAJK", amenities);
 
       // console.log("BLABLABLA",searchAmen)
 
@@ -360,14 +368,12 @@ export const deleteLogicUserById = (id) => {
 export const restoreUserById = (id) => {
   return async (dispatch) => {
     try {
-      await axios.get(`/users/restore/${id}`)
-     
+      await axios.get(`/users/restore/${id}`);
     } catch (error) {
       console.error(error);
-    
     }
-  }
-}
+  };
+};
 
 export const deleteMessageById = (id) => {
   return async (dispatch) => {
@@ -426,8 +432,6 @@ export const getStates = (country) => {
     console.log(error);
   }
 };
-
-
 
 export const getLogin = async (
   login,
@@ -511,7 +515,7 @@ export const getLogin = async (
       }
     } catch (error) {
       console.log(error);
-      if (error.response.data.error.includes("sintaxis")) {
+      if (error.message.includes("sintaxis")) {
         setToastBody({ response: "Faltan datos!" });
       } else if (error.response.data.error.includes("Validation Error")) {
         setToastBody({ response: "Ese correo ya esta en uso!" });
@@ -528,7 +532,7 @@ export const getLogin = async (
 export const getPropertyByUser = (id) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`assets/myassets/${id}`)
+      const { data } = await axios(`assets/myassets/${id}`);
       dispatch({
         type: GET_PROPERTIES_BY_USER,
         payload: data,
@@ -536,109 +540,112 @@ export const getPropertyByUser = (id) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const setBookingDate = async (
+  booking,
+  setReserv,
+  setBookingId,
+  setErrors
+) => {
+  try {
+    const res = await axios.post("/rents/reserva", booking);
+    if (res.data.includes("-")) {
+      setReserv(true);
+      setBookingId(res.data);
+      console.log(res.data);
+      return;
+    }
+    setReserv(false);
+    setErrors(res.data);
+    console.log(res.data);
+    return;
+  } catch (error) {
+    return console.log(error);
   }
 };
 
-export const setBookingDate = async (booking, setReserv , setBookingId , setErrors)  => {
-      try {
-          const res = await axios.post("/rents/reserva", booking);
-          if(res.data.includes("-")) {
-            setReserv(true)
-            setBookingId(res.data)
-            console.log(res.data);
-            return
-          } 
-            setReserv(false);
-            setErrors(res.data)
-            console.log(res.data);
-          return
-      } catch (error) {
-        return console.log(error);
-      }
+export const handleReserv = async (bookingId) => {
+  try {
+    console.log(bookingId);
+    const { data } = await axios.post(`/rents/create/${bookingId}`);
+    console.log(data);
+    if (data) {
+      // console.log(data.data);
+      const URL = data.split("-");
+      var width = 500;
+      var height = 600;
+      const left = (screen.width - width) / 2;
+      const top = (screen.height - height) / 2;
+      const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
+      var payment = window.open(URL[0], "_blank", options);
+
+      var intervalID = setInterval(() => {
+        if (payment.closed) {
+          clearInterval(intervalID);
+          setPaymentSuccess(true);
+          setButtonReserv(false);
+        }
+      }, 100);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+export const getPayment = async (asset, setPaymentSuccess, setButtonReserv) => {
+  const { name, description, price } = asset;
+  console.log(price);
+  try {
+    const data = await axios.post("/pay/create-checkout-session", {
+      name: name,
+      description: description,
+      price: price,
+    });
 
-export const handleReserv = async (bookingId) => {
+    if (data) {
+      console.log(data.data);
+      var width = 500;
+      var height = 600;
+      const left = (screen.width - width) / 2;
+      const top = (screen.height - height) / 2;
+      const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
+      var payment = window.open(data.data, "_blank", options);
 
+      var intervalID = setInterval(() => {
+        if (payment.closed) {
+          clearInterval(intervalID);
+          setPaymentSuccess(true);
+          setButtonReserv(false);
+        }
+      }, 100);
+    }
+  } catch (error) {
+    return console.log(error);
+  }
+};
+
+export const reviewsPut = async (form, condicional) => {
+  console.log("aapa", form);
+
+  try {
+    const { data } = await axios.put(`/reviews/${condicional}/`, form);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const reviewsGet = (id) => {
+  return async (dispatch) => {
     try {
-      console.log(bookingId)
-      const {data} = await axios.post(`/rents/create/${bookingId}`);
-      console.log(data)
-      if(data) {
-        // console.log(data.data);
-        const URL = data.split("-")
-         var width = 500;
-         var height = 600;
-         const left = (screen.width - width) / 2;
-         const top = (screen.height - height) / 2;
-         const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
-         var payment = window.open(URL[0], '_blank', options);
-         
-         var intervalID = setInterval(() => {
-           
-           if(payment.closed) {
-             clearInterval(intervalID);
-             setPaymentSuccess(true);
-             setButtonReserv(false);
-           }
-         }, 100)
-       }
+      const { data } = await axios("/reviews/" + id);
+      return dispatch({
+        type: GET_REVIEWS,
+        payload: data,
+      });
     } catch (error) {
       console.log(error);
     }
+  };
 };
-
-export const  getPayment = async (asset,  setPaymentSuccess, setButtonReserv ) => {
-  const {name , description , price} = asset;
-  console.log(price)
-    try {
-      const data = await axios.post("/pay/create-checkout-session" , {name : name , description : description , price : price})
-     
-      if(data) {
-       console.log(data.data);
-        var width = 500;
-        var height = 600;
-        const left = (screen.width - width) / 2;
-        const top = (screen.height - height) / 2;
-        const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
-        var payment = window.open(data.data, '_blank', options);
-        
-        var intervalID = setInterval(() => {
-          
-          if(payment.closed) {
-            clearInterval(intervalID);
-            setPaymentSuccess(true);
-            setButtonReserv(false);
-          }
-        }, 100)
-      }
-
-    } catch (error) {
-      return console.log(error);
-    }
-};
-
-export const reviewsPut = async (form , condicional) =>{
-  console.log("aapa", form)
-  
-    try {
-      const {data} = await axios.put(`/reviews/${condicional}/`, form)
-    } catch (error) {
-      console.log(error)
-    }
-  
-}
-
-export const reviewsGet = (id) => {
-  return async (dispatch) =>{
-    try {
-      const {data} = await axios("/reviews/"+ id)
-      return dispatch({
-        type: GET_REVIEWS,
-        payload: data
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}

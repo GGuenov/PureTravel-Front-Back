@@ -41,32 +41,38 @@ const LoginRegister = () => {
               height: "616px",
               width: "100%",
               display: "block",
-              position:"relative"
-              // width: "70%",
-              // border: "none",
-              // borderRadius:"none",
+              position: "relative",
             }}
             className={style.img}
-            ></img>
-            <div style={{position:"absolute"}}>
+          ></img>
+          <div style={{ position: "absolute" }}>
             <h3>Estoy de visita!</h3>
-            <Link to={"/home"}> <button>Volver a la pagina principal</button></Link>
-            </div>
+            <Link to={"/home"}>
+              {" "}
+              <button>Volver a la pagina principal</button>
+            </Link>
+          </div>
         </div>
-        
+
         <div
           style={{
             background: "rgba(255, 255, 255, 0.701)",
             width: "100%",
-            height:"616px",
+            height: "616px",
             margin: "0 auto",
           }}
         >
-          
-          <Login handleSwitch={handleSwitch} conditional={conditional} setConditional={setConditional} />
-          <Register handleSwitch={handleSwitch} conditional={conditional} setConditional={setConditional}/>
+          <Login
+            handleSwitch={handleSwitch}
+            conditional={conditional}
+            setConditional={setConditional}
+          />
+          <Register
+            handleSwitch={handleSwitch}
+            conditional={conditional}
+            setConditional={setConditional}
+          />
         </div>
-        
       </div>
     </>
   );
