@@ -12,17 +12,17 @@ import Contacts from "../Contacts/Contatcs";
 import Ranking from "./Ranking/Ranking";
 
 export const Home = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const nextIndex = (activeIndex + 1) % 3;
-      setActiveIndex(nextIndex)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [activeIndex])
+      setActiveIndex(nextIndex);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [activeIndex]);
+  console.log(321);
 
-  
   return (
     <>
       <div className={`${style.containerFluid} ${style.container}`}>
@@ -37,7 +37,6 @@ export const Home = () => {
                     <span>
                       <span>precios</span>
                       <span>descuentos</span>
-                      {/* <span>hoteles!</span> */}
                       <span>servicios</span>
                       <span>destinos</span>
                       <span>precios</span>
@@ -70,21 +69,33 @@ export const Home = () => {
                   ></button>
                 </div>
                 <div className="carousel-inner">
-                  <div className={`carousel-item ${activeIndex == 0 ? "active" : ""}`}>
+                  <div
+                    className={`carousel-item ${
+                      activeIndex == 0 ? "active" : ""
+                    }`}
+                  >
                     <img
                       className="d-block mx-auto img-fluid "
                       src={forest}
                       alt="..."
                     />
                   </div>
-                  <div className={`carousel-item ${activeIndex == 1 ? "active" : ""}`}>
+                  <div
+                    className={`carousel-item ${
+                      activeIndex == 1 ? "active" : ""
+                    }`}
+                  >
                     <img
                       className="d-block mx-auto img-fluid"
                       src={playa2}
                       alt="..."
                     />
                   </div>
-                  <div className={`carousel-item ${activeIndex == 2 ? "active" : ""}`}>
+                  <div
+                    className={`carousel-item ${
+                      activeIndex == 2 ? "active" : ""
+                    }`}
+                  >
                     <img
                       className="d-block mx-auto img-fluid"
                       src={playa3}
@@ -135,7 +146,7 @@ export const Home = () => {
           <Sale></Sale>
         </div>
         <div>
-          <Ranking/>
+          <Ranking />
         </div>
         <div style={{ height: "100%" }}>
           <Contacts></Contacts>
