@@ -75,22 +75,18 @@ const Ranking = () => {
     if (prevUser != users) {
       dispatch(getAllUsers(filter));
     }
-
-    // console.log(allUsers)
   }, [filter]);
   const [email, setEmail] = useState("");
   console.log(email);
   const handleSendMessage = () => {
-    // Define los datos para enviar al servidor
     const data = {
       to: email,
       subject: "Respuesta solicitud",
-      text: "Hpolasa", // Reemplaza esto con el contenido del mensaje
+      text: "Hpolasa",
     };
 
-    // Realiza una solicitud POST al servidor para enviar el correo electrónico
     axios
-      .post("https://daily-oven-production.up.railway.app/sendmail", data) // Debes ajustar la URL de acuerdo a tu configuración de servidor
+      .post("https://daily-oven-production.up.railway.app/sendmail", data)
       .then((response) => {
         console.log(response.data);
       })
@@ -99,7 +95,6 @@ const Ranking = () => {
           "Error al enviar el correo electrónico desde el frontend: ",
           error
         );
-        // Maneja el error según sea necesario
       });
   };
 
@@ -427,8 +422,8 @@ const Ranking = () => {
                     type="text"
                     className="form-control"
                     id="recipient-name"
-                    value={email} // Asigna el valor del estado email al campo de entrada
-                    onChange={(e) => setEmail(e.target.value)} // Actualiza el estado email cuando el campo cambie
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </form>

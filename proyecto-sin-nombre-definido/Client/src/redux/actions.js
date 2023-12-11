@@ -303,8 +303,6 @@ export const searchByFilter = (
 
       console.log("KJDASJKDSAJK", amenities);
 
-      // console.log("BLABLABLA",searchAmen)
-
       const { data } = await axios(
         `/assets?size=10&page=${pagina}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes${mapAmen}`
       );
@@ -320,13 +318,11 @@ export const searchByFilter = (
 export const deleteAssetById = (id) => {
   return async (dispatch) => {
     try {
-      // Realiza la solicitud de eliminación al servidor
       await axios.delete(`/assets/${id}`);
 
-      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
         type: DELETE_ASSET_BY_ID,
-        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+        payload: id,
       });
     } catch (error) {
       console.error(error);
@@ -334,17 +330,14 @@ export const deleteAssetById = (id) => {
   };
 };
 
-// Acción para eliminar una propiedad por su ID
 export const deleteLogicAssetById = (id) => {
   return async (dispatch) => {
     try {
-      // Realiza la solicitud de eliminación al servidor
       await axios.delete(`/assets/delete/${id}`);
 
-      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
         type: DELETE_LOGIC_ASSET_BY_ID,
-        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+        payload: id,
       });
     } catch (error) {
       console.error(error);
@@ -355,10 +348,7 @@ export const deleteLogicAssetById = (id) => {
 export const deleteLogicUserById = (id) => {
   return async (dispatch) => {
     try {
-      // Realiza la solicitud de eliminación al servidor
       await axios.delete(`/users/delete/${id}`);
-
-      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
     } catch (error) {
       console.error(error);
     }
@@ -378,13 +368,11 @@ export const restoreUserById = (id) => {
 export const deleteMessageById = (id) => {
   return async (dispatch) => {
     try {
-      // Realiza la solicitud de eliminación al servidor
       await axios.delete(`/contact/${id}`);
 
-      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
-        type: DELETE_C_BY_ID,
-        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+        type: DELETE_CONTACT_BY_ID,
+        payload: id,
       });
     } catch (error) {
       console.error(error);
